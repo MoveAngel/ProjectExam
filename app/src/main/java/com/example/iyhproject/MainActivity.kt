@@ -1,42 +1,35 @@
 package com.example.iyhproject
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.Button
+import android.widget.EditText
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var recycler_view : RecyclerView
-    lateinit var adapter: MyAdapter
+    lateinit var Username : EditText
+    lateinit var Password : EditText
+    lateinit var Login : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.login_page)
 
-        init()
-        recycler_view.layoutManager = GridLayoutManager(this, 2)
-        recycler_view.adapter = adapter
-    }
+        Username = findViewById(R.id.username)
+        Password = findViewById(R.id.password)
+        Login = findViewById(R.id.button)
 
-    private fun init() {
-        recycler_view = findViewById(R.id.rv_itemlist)
+        Login.setOnClickListener {
+            val bundle = Bundle()
 
-        var data = ArrayList<Food>()
-            data.add(Food(R.drawable.ayambakar, "Ayam Bakar", "25", "15.000"))
-            data.add(Food(R.drawable.sateayam, "Sate Ayam", "40", "15.000"))
-            data.add(Food(R.drawable.baksosapi, "Bakso Sapi", "45", "10.000"))
-            data.add(Food(R.drawable.ikanbakar, "Ikan Bakar", "50", "40.000"))
-            data.add(Food(R.drawable.kentangmustofa, "Kentang Mustofa", "10", "12.000"))
-            data.add(Food(R.drawable.nasigoreng, "Nasi Goreng", "24", "14.000"))
-            data.add(Food(R.drawable.rawon, "Rawon", "34", "15.000"))
-            data.add(Food(R.drawable.gudeg, "Gudeg", "70", "20.000"))
-            data.add(Food(R.drawable.airmineral, "Air Mineral",  "150", "3.000"))
-            data.add(Food(R.drawable.esteh, "Es Teh", "60", "4.000"))
-            data.add(Food(R.drawable.esjeruk, "Es Jeruk", "48", "5.000"))
-            data.add(Food(R.drawable.escincau, "Es Cincau", "28", "6.000"))
-            data.add(Food(R.drawable.anekajus, "Aneka Jus", "42", "7.000"))
+            bundle.putString("Username", Username.text.toString())
+            bundle.putString("Password", Password.text.toString())
 
-        adapter = MyAdapter(data)
+            val intent = Intent(this, Dashboard::class.java)
+            intent.putExtras(bundle)
+            startActivity(intent)
+        }
+
     }
 }
